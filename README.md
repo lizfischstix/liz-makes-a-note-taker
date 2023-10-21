@@ -8,7 +8,7 @@
   * [License](#license)
 
   ## Installation: 
-  this project can be accessed 
+  Click [HERE](https://agile-depths-30713-3e7b4facfb83.herokuapp.com/) to access the deployed project. 
 
   ## Contact:
   @lizfischstix
