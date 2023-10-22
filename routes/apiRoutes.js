@@ -1,5 +1,4 @@
 const router = require('express').Router();
-// const deleteNote = require('fs.unlink')
 
 //helper to gen unique note ID
 const uuid = require('../helper/uuid');
@@ -35,20 +34,18 @@ console.log(req.body);
 });
 
 // //DELETE notes by uuid from api/notes
-// router.delete('/notes', (req, res) => {
-//    console.log(req.body);
-//       //Need to read the db.json file and delete selected note 
-//       console.info(`${req.method} note deleted`);
-//       const { title, text } = req.body
-//       if (title && text) {
-//          const deleteNote = {
-//             title,
-//             text,
-//             id: uuid(),
-//          }
-//          fs.unlink(deleteNote, './db/db.json');
-//       }
-//       res.json('working')
-//    });
+router.delete('/notes/:id', (req, res) => {
+   console.info(req.body);
+      //Need to read the db.json file, and re-write excluding object with selected uuid 
+      console.info(`${req.method} note deleted`);
+      const { title, text } = req.body
+      if (uuid) {
+         const deleteNote = {
+            id: uuid()
+         }
+         readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+      }
+      res.json('working')
+   });
 
 module.exports = router;
