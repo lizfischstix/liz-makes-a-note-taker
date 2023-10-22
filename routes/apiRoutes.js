@@ -4,7 +4,7 @@ const router = require('express').Router();
 const uuid = require('../helper/uuid');
 
 //helper to read / write to JSON file
-const { readFromFile, readAndAppend } = require('../helper/fsUtils')
+const { readFromFile, readAndAppend, writeToFile } = require('../helper/fsUtils')
 
 //localhost/api/notes
 router.get('/notes', (req, res) => {
@@ -34,18 +34,20 @@ console.log(req.body);
 });
 
 // //DELETE notes by uuid from api/notes
-router.delete('/notes/:id', (req, res) => {
-   console.info(req.body);
-      //Need to read the db.json file, and re-write excluding object with selected uuid 
-      console.info(`${req.method} note deleted`);
-      const { title, text } = req.body
-      if (uuid) {
-         const deleteNote = {
-            id: uuid()
-         }
-         readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
-      }
-      res.json('working')
-   });
+// router.delete('/notes/:id', (req, res) => {
+//    console.info(req.body);
+//       //Need to read the db.json file, and re-write excluding object with selected uuid 
+//       console.info(`${req.method} note deleted`);
+//       const { title, text } = req.body
+//       if (uuid) {
+//          const deleteNote = {
+//             title,
+//             text,
+//             id: uuid(),
+//          }
+//          readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+//       }
+//       res.json('working')
+//    });
 
 module.exports = router;
