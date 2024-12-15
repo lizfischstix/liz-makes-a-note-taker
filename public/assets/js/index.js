@@ -85,21 +85,26 @@ const handleNoteSave = () => {
 
 // Delete the clicked note
 const handleNoteDelete = (e) => {
-  // Prevents the click listener for the list from being called when the button inside of it is clicked
   e.stopPropagation();
 
   const note = e.target;
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
 
+  
+
   if (activeNote.id === noteId) {
     activeNote = {};
   }
 
-  deleteNote(noteId).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
+  deleteNote(noteId)
+    .then(() => {
+      console.log(`Deleted note with ID: ${noteId}`);
+      getAndRenderNotes();
+      renderActiveNote();
+    })
+    .catch((err) => console.error("Error deleting note:", err));
 };
+
 
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {
@@ -140,14 +145,14 @@ const renderNoteList = async (notes) => {
   const createLi = (text, delBtn = true) => {
     const liEl = document.createElement('li');
     liEl.classList.add('list-group-item');
-
+  
     const spanEl = document.createElement('span');
     spanEl.classList.add('list-item-title');
     spanEl.innerText = text;
     spanEl.addEventListener('click', handleNoteView);
-
+  
     liEl.append(spanEl);
-
+  
     if (delBtn) {
       const delBtnEl = document.createElement('i');
       delBtnEl.classList.add(
@@ -158,12 +163,13 @@ const renderNoteList = async (notes) => {
         'delete-note'
       );
       delBtnEl.addEventListener('click', handleNoteDelete);
-
+  
       liEl.append(delBtnEl);
     }
-
+  
     return liEl;
   };
+  
 
   if (jsonNotes.length === 0) {
     noteListItems.push(createLi('No saved Notes', false));
